@@ -1,6 +1,7 @@
 #include <iostream>
 
 
+
 float computeVolume(float sideLength) {
 
     float vol = sideLength * sideLength * sideLength;   
@@ -11,10 +12,13 @@ float computeVolume(float sideLength) {
 
 int main( )
 {
-float width, height;
-std::cout << "Enter width of cube: ";
-std::cin >> width;
 
-std::cout << "Volume is: " << computeVolume(width) << std::endl;
+    unsigned long long int variable;
+
+    std::cout << "Enter variable to store:";
+    std::cin >> variable;
+    std::cout << "Store value is:" << variable <<  std::endl;
+
+    std::cout << "Size of var is:" << sizeof(variable) << std::endl;
 
 } 
