@@ -3,7 +3,7 @@
 
 class Solution {
 public:
-    void moveZeroes(std::vector<int> nums) {
+    void moveZeroes(std::vector<int>& nums) {
         
         int size1 = nums.size();
         std::vector<int> output;
@@ -13,18 +13,21 @@ public:
             {
                 // std::cout << nums[i];
                 output.push_back(nums[i]);
-            }
+            } 
         }
-        
-        for (int i=0;i<5;i++){
-
-            std::cout << output[i] << std::endl;
-
+        for (int i = 0; i < size1; i++){
+            if (nums[i] == 0)
+            {
+                // std::cout << nums[i];
+                output.push_back(0);
+            } 
         }
+        nums = output;
         
-    
+        for (int i=0;i<nums.size();i++){
 
-        
+            std::cout << nums[i];
+        }
         
     }
 };
