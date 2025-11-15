@@ -1,0 +1,5 @@
+*CMakeFiles*
+*Cache*
+cmake
+*.out*
+*.cmake*

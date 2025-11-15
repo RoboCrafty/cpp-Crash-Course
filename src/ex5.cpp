@@ -19,7 +19,7 @@ int main ()
         for (int j = size-1; j >= i; j--)
         {
             if (array2[j-1] > array2 [j])
-            {   
+            {  
                 std::cout << "J = " << j << " ----- [ ";
                 for (int k = 0; k < size; k++)
                 {
