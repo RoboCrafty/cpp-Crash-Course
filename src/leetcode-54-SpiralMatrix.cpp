@@ -6,91 +6,117 @@ class Matrix {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix)
     {
-        vector<int> tmp;
-        std::vector<std::string> direction = {"right", "down", "left", "up"}; //for moving in spiral
-        vector<vector<bool>> trackExp(matrix.size(), vector<bool> (matrix[0].size(), 0));
         cout << "Input Matrix: " << endl;
         printMatrix(matrix);
-        int rowTracker, columnTracker;
-        rowTracker = 0;
-        columnTracker = 0;
 
-
-        for(int i=0; i < (matrix.size()*matrix.size())/matrix.size(); i++)
+        int rowLen = matrix.size();
+        int colLen = matrix[0].size();
+        int totalLen = rowLen * colLen;
+        vector<int> ret;
+        ret.resize(totalLen);
+        // set boundary to be 0
+        int boundary = 0;
+        int i = 0;
+        // set row and col to be 0 and - 1
+        int row = 0;
+        int col = -1; // I will tell u why later its because you start from col 0
+        while (i < totalLen)
         {
-            for (int j=0; j<4; j++)
+            while (++col < (colLen-boundary) && i < totalLen) // go right
             {
-                updateMatrix(matrix, tmp, direction[j], columnTracker, rowTracker, trackExp);
+                ret[i]=matrix[row][col];
+                i++;
             }
+            col--;
+            while (++row < (rowLen-boundary) && i < totalLen) // go down
+            {
+                ret[i]=matrix[row][col];
+                i++;
+            }
+            row--;
+            while (--col >= boundary && i < totalLen) // go left
+            {
+                ret[i]=matrix[row][col];
+                i++;
+            }
+            col++;
+            while (--row > (boundary) && i < totalLen) // go up
+            {
+                ret[i]=matrix[row][col];
+                i++;
+            }
+            row++;
+            boundary++;
         }
-        return tmp;
+        // printVector(ret);
+        return ret;
     }
 
-    void updateMatrix(vector<vector<int>>& matrix, vector<int>& tmp, string& direction, int& columnTracker, int&  rowTracker, vector<vector<bool>>& trackExp)
-    {
-        int row = matrix.size();
-        int col = matrix[0].size();
-        int t1 = 0;
-        int t2, t3, t4;
+    // void updateMatrix(vector<vector<int>>& matrix, vector<int>& tmp, string& direction, int& columnTracker, int&  rowTracker, vector<vector<bool>>& trackExp)
+    // {
+    //     int row = matrix.size();
+    //     int col = matrix[0].size();
+    //     int t1 = 0;
+    //     int t2, t3, t4;
 
 
-        if (direction == "right")
-        {
+    //     if (direction == "right")
+    //     {
             
-            for (int a=columnTracker; a<col; a++)
-            {
-                if (trackExp[rowTracker][a] == 0)
-                {
-                    tmp.push_back(matrix[rowTracker][a]);
-                    columnTracker = a;
-                    trackExp[rowTracker][a] = 1;
-                }
-            }
-        }
-        else if (direction == "down")
-        {
-            rowTracker++;
-            for (int a=rowTracker; a<row; a++)
-            {
-                if (trackExp[a][columnTracker] == 0)
-                {
-                    tmp.push_back(matrix[a][columnTracker]);
-                    rowTracker = a;
-                    trackExp[a][columnTracker] = 1;
-                }
-            }
-        }
-        else if (direction == "left")
-        {
-            columnTracker--;
-            for (int a=columnTracker; a>=0; a--)
-            {
-                if (trackExp[rowTracker][a] == 0)
-                {
-                    tmp.push_back(matrix[rowTracker][a]);
-                    columnTracker = a;
-                    trackExp[rowTracker][a] = 1;
-                }
-            }
-        }
-        else if (direction == "up")
-        {
-            rowTracker--;
-            for (int a=rowTracker; a>0; a--)
-            {
-                if (trackExp[a][columnTracker] == 0)
-                {
-                    tmp.push_back(matrix[a][columnTracker]);
-                    rowTracker = a;
-                    trackExp[a][columnTracker] = 1;
-                }
-            }
-        }
-        else
-        {
-            cerr << "Invalid direction";
-        }
-    }
+    //         for (int a=columnTracker; a<col; a++)
+    //         {
+    //             if (trackExp[rowTracker][a] == 0)
+    //             {
+    //                 tmp.push_back(matrix[rowTracker][a]);
+    //                 columnTracker = a;
+    //                 trackExp[rowTracker][a] = 1;
+    //             }
+    //         }
+    //     }
+    //     else if (direction == "down")
+    //     {
+    //         rowTracker++;
+    //         for (int a=rowTracker; a<row; a++)
+    //         {
+    //             if (trackExp[a][columnTracker] == 0)
+    //             {
+    //                 tmp.push_back(matrix[a][columnTracker]);
+    //                 rowTracker = a;
+    //                 trackExp[a][columnTracker] = 1;
+    //             }
+    //         }
+    //     }
+    //     else if (direction == "left")
+    //     {
+    //         columnTracker--;
+    //         for (int a=columnTracker; a>=0; a--)
+    //         {
+    //             if (trackExp[rowTracker][a] == 0)
+    //             {
+    //                 tmp.push_back(matrix[rowTracker][a]);
+    //                 columnTracker = a;
+    //                 trackExp[rowTracker][a] = 1;
+    //             }
+    //         }
+    //     }
+    //     else if (direction == "up")
+    //     {
+    //         rowTracker--;
+    //         for (int a=rowTracker; a>0; a--)
+    //         {
+    //             if (trackExp[a][columnTracker] == 0)
+    //             {
+    //                 tmp.push_back(matrix[a][columnTracker]);
+    //                 rowTracker = a;
+    //                 trackExp[a][columnTracker] = 1;
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         cerr << "Invalid direction";
+    //     }
+    // }
 
     template <typename T>
     void printVector(std::vector<T>& v)
@@ -164,7 +190,7 @@ int main()
             { 36, 37, 38, 39, 40, 41, 42 },
             { 43, 44, 45, 46, 47, 48, 49 }
         };
-    auto result = m1.spiralOrder(m2);
+    auto result = m1.spiralOrder(m7);
     m1.printVector(result);
 }
 
